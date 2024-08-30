@@ -8,8 +8,7 @@ export default async function Home() {
         <div>
             {articles.map(article => (
                 <div key={article.id}>
-                    {article.title}
-                    <Link href={`articles/${article.id}`}>Visit</Link>
+                    <Link href={`articles/${article.id}`}>{article.title}</Link>
                 </div>
             ))}
         </div>
