@@ -12,7 +12,7 @@ model User {
   email      String    @unique
   first_name String
   last_name  String
-  token      String?
+  hash       String
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   roles      Role[]
@@ -31,5 +31,6 @@ model Article {
   author     User     @relation(fields: [user_id], references: [id])
   user_id    String
   title      String
+  slug       String
   created_at DateTime @default(now())
 }

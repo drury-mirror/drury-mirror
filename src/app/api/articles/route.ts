@@ -1,13 +1,13 @@
 import db from '@/lib/db'
 import { z } from 'zod'
 
-const ArticleSchema = z.object({
-    title: z.string().min(1),
-})
-
 export async function GET() {
     return Response.json(await db.article.findMany({ include: { author: true } }))
 }
+
+const articleSchema = z.object({
+    title: z.string().min(1),
+})
 
 export async function POST(request: Request) {
     let data
@@ -18,7 +18,7 @@ export async function POST(request: Request) {
         return Response.json({ error: 'Invalid JSON.' }, { status: 400 })
     }
 
-    const valid = ArticleSchema.safeParse(data)
+    const valid = articleSchema.safeParse(data)
 
     if (!valid.success) {
         return Response.json({ error: 'Invalid article.' }, { status: 400 })
@@ -28,6 +28,7 @@ export async function POST(request: Request) {
         data: {
             user_id: (await db.user.findFirst())?.id || '',
             title: valid.data.title,
+            slug: 'e'
         },
     })
 
