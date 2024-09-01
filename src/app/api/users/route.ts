@@ -1,5 +1,6 @@
 import db from '@/lib/db'
 import { z } from 'zod'
+import bcrypt from 'bcryptjs'
 
 export async function GET() {
     return Response.json(await db.user.findMany({ include: { roles: true } }))
@@ -54,12 +55,15 @@ export async function POST(request: Request) {
         return Response.json({ error: 'A user with that email already exists.' }, { status: 400 })
     }
 
+    const salt = await bcrypt.genSalt(11)
+    const hash = await bcrypt.hash(valid.data.password, salt)
+
     await db.user.create({
         data: {
             email: valid.data.email,
             first_name: valid.data.first_name,
             last_name: valid.data.last_name,
-            hash: valid.data.password,
+            hash: hash,
         },
     })
 
