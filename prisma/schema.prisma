@@ -31,6 +31,5 @@ model Article {
   author     User     @relation(fields: [user_id], references: [id])
   user_id    String
   title      String
-  slug       String
   created_at DateTime @default(now())
 }

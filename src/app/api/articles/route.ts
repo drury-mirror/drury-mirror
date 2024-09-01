@@ -28,7 +28,6 @@ export async function POST(request: Request) {
         data: {
             user_id: (await db.user.findFirst())?.id || '',
             title: valid.data.title,
-            slug: 'e'
         },
     })
 
