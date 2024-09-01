@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  email      String    @unique
-  first_name String
-  last_name  String
-  hash       String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  roles      Role[]
-  articles   Article[]
+  id            String    @id @default(cuid())
+  email         String    @unique
+  first_name    String
+  last_name     String
+  password_hash String
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  roles         Role[]
+  articles      Article[]
 }
 
 model Role {

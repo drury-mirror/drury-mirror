@@ -7,24 +7,14 @@ export async function GET() {
 }
 
 const passwordSchema = (z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters' })
-    .refine((password) => /[A-Z]/.test(password), {
-        message: 'Password must contain at least one uppercase character',
-    })
-    .refine((password) => /[a-z]/.test(password), {
-        message: 'Password must contain at least one lowercase character',
-    })
-    .refine((password) => /[0-9]/.test(password), {
-        message: 'Password must contain at least one digit',
-    })
-    .refine((password) => /[!@#$%^&*]/.test(password), {
-        message: 'Password must contain at least one special character',
-    }))
-    .or(z
         .string()
-        .min(16),
-    )
+        .min(8, { message: 'Password must be at least 8 characters' })
+        .max(128)
+        .regex(/[A-Z]/, { message: 'Password must contain at least one uppercase character' })
+        .regex(/[a-z]/, { message: 'Password must contain at least one lowercase character' })
+        .regex(/[0-9]/, { message: 'Password must contain at least one digit' })
+        .regex(/[!@#$%^&*]/, { message: 'Password must contain at least one special character' })
+)
 
 const userSchema = z.object({
     email: z.string().email(),
@@ -55,15 +45,14 @@ export async function POST(request: Request) {
         return Response.json({ error: 'A user with that email already exists.' }, { status: 400 })
     }
 
-    const salt = await bcrypt.genSalt(11)
-    const hash = await bcrypt.hash(valid.data.password, salt)
+    const passwordHash = await bcrypt.hash(valid.data.password, 11)
 
     await db.user.create({
         data: {
             email: valid.data.email,
             first_name: valid.data.first_name,
             last_name: valid.data.last_name,
-            hash: hash,
+            password_hash: passwordHash,
         },
     })
 
