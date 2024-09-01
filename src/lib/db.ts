@@ -1,8 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 
-let db: PrismaClient
-
-global.db = new PrismaClient()
-db = global.db
+const db_global = globalThis as unknown as { db: PrismaClient }
+const db = db_global.db || new PrismaClient()
 
 export default db
