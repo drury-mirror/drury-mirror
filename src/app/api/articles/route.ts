@@ -6,7 +6,7 @@ const ArticleSchema = z.object({
 })
 
 export async function GET() {
-    return Response.json(await db.article.findMany())
+    return Response.json(await db.article.findMany({ include: { author: true } }))
 }
 
 export async function POST(request: Request) {
@@ -26,7 +26,7 @@ export async function POST(request: Request) {
 
     await db.article.create({
         data: {
-            user_id: 1,
+            user_id: (await db.user.findFirst())?.id || '',
             title: valid.data.title,
         },
     })
