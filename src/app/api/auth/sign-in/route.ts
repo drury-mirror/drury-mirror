@@ -1,7 +1,7 @@
 import db from '@/lib/db'
 import { z } from 'zod'
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
+import { createToken } from '@/lib/auth/token'
 
 const signInSchema = z.object({
     email: z.string(),
@@ -29,14 +29,7 @@ export async function POST(request: Request) {
         return Response.json({ error: 'Incorrect email or password.' }, { status: 401 })
     }
 
-    const jwtSecret = process.env.AUTH_SECRET
-
-    if (!jwtSecret) {
-        console.log('Please set the \'AUTH_SECRET\' environment variable in the \'.env\' file.')
-        return Response.json({ error: 'Internal server error.' }, { status: 500 })
-    }
-
-    const token = jwt.sign({ id: user.id }, jwtSecret)
+    const token = await createToken(user.id)
 
     return Response.json({ token: token }, { status: 200 })
 }
