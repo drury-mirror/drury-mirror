@@ -1,3 +1,5 @@
+'use server'
+
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 import { redirect } from 'next/navigation'
@@ -61,7 +63,7 @@ export async function verifyToken() {
         redirect('/auth/sign-in')
     }
 
-    await extendToken()
+    // await extendToken()
     return decrypt(token)
 }
 
@@ -76,7 +78,7 @@ export async function userHasRole(role: string) {
         return false
     }
 
-    const user = await getUser(token.user_id)
+    const user = await getUser(token.id)
 
     if (!user) {
         return false
