@@ -1,5 +1,7 @@
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
+import { redirect } from 'next/navigation'
+import db from '@/lib/db'
 
 export async function encrypt(user_id: string) {
     const jwtSecret = process.env.AUTH_SECRET
@@ -48,6 +50,47 @@ export async function extendToken() {
     })
 }
 
-export function deleteToken() {
+export async function deleteToken() {
     cookies().delete('token')
+}
+
+export async function verifyToken() {
+    const token = cookies().get('token')?.value
+
+    if (!token) {
+        redirect('/auth/sign-in')
+    }
+
+    await extendToken()
+    return decrypt(token)
+}
+
+export async function getUser(user_id: string) {
+    return db.user.findUnique({ where: { id: user_id }, include: { roles: true } })
+}
+
+export async function userHasRole(role: string) {
+    const token = await verifyToken()
+
+    if (!token || typeof token === 'string') {
+        return false
+    }
+
+    const user = await getUser(token.user_id)
+
+    if (!user) {
+        return false
+    }
+
+    for (const user_role of user.roles) {
+        if (user_role.name === role) {
+            return true
+        }
+    }
+
+    return false
+}
+
+export async function isLoggedIn() {
+    return cookies().get('token') !== undefined
 }

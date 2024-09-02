@@ -4,13 +4,11 @@ import Link from 'next/link'
 export default async function Home() {
     const articles = await db.article.findMany()
 
-    return (
-        <div>
-            {articles.map(article => (
-                <div key={article.id}>
-                    <Link href={`/articles/${article.id}`}>{article.title}</Link>
-                </div>
-            ))}
-        </div>
-    )
+    return <div>
+        {articles.map(article => (
+            <div key={article.id}>
+                <Link href={`/articles/${article.id}`}>{article.title}</Link>
+            </div>
+        ))}
+    </div>
 }
