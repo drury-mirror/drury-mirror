@@ -1,7 +1,10 @@
+'use server'
+
 import db from '@/lib/db'
 import { z } from 'zod'
 import bcrypt from 'bcryptjs'
 import { createToken } from '@/lib/auth/token'
+import { redirect } from 'next/navigation'
 
 const passwordSchema = z
     .string()
@@ -22,23 +25,23 @@ const userSchema = z.object({
     message: 'Passwords do not match', path: ['confirm_password'],
 })
 
-export async function POST(request: Request) {
-    let data
-
-    try {
-        data = await request.json()
-    } catch (error) {
-        return Response.json({ error: 'Invalid JSON.' }, { status: 400 })
+export async function signUp(formData: FormData) {
+    const data = {
+        email: formData.get('email'),
+        first_name: formData.get('first_name'),
+        last_name: formData.get('last_name'),
+        password: formData.get('password'),
+        confirm_password: formData.get('password'),
     }
 
     const valid = userSchema.safeParse(data)
 
     if (!valid.success) {
-        return Response.json({ error: valid.error }, { status: 400 })
+        return { error: valid.error }
     }
 
     if (await db.user.findUnique({ where: { email: valid.data.email } })) {
-        return Response.json({ error: 'A user with that email already exists.' }, { status: 400 })
+        return { error: 'A user with that email already exists.' }
     }
 
     const passwordHash = await bcrypt.hash(valid.data.password, 11)
@@ -52,7 +55,6 @@ export async function POST(request: Request) {
         },
     })
 
-    const token = await createToken(user.id)
-
-    return Response.json({ token: token }, { status: 200 })
+    await createToken(user.id)
+    redirect('/')
 }

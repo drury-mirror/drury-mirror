@@ -20,13 +20,13 @@ export async function signIn(formData: FormData) {
     const valid = signInSchema.safeParse(data)
 
     if (!valid.success) {
-        return { error: 'error' }
+        return { error: valid.error }
     }
 
     const user = await db.user.findUnique({ where: { email: valid.data.email } })
 
     if (!user || !(await bcrypt.compare(valid.data.password, user.password_hash))) {
-        return { error: 'error' }
+        return { error: 'Invalid username or password' }
     }
 
     await createToken(user.id)
