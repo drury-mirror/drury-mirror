@@ -63,6 +63,8 @@ export async function verifyToken() {
         redirect('/auth/sign-in')
     }
 
+    // TODO: Extend token whenever a login is verified
+    // Currently this doesn't work because of a server/client issue
     // await extendToken()
     return decrypt(token)
 }
