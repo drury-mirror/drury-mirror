@@ -6,31 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: drury_mirror
-
-  prisma:
-    image: backend
-    depends_on:
-      backend:
-        condition: service_started
-    volumes:
-      - ./:/app
     ports:
-      - '5555:5555'
-    entrypoint: ["npm", "run", "manage-database"]
-
-  backend:
-    image: backend
-    depends_on:
-      database:
-        condition: service_started
-    build: .
-    volumes:
-      - ./:/app
-    env_file:
-      - .env
-    ports:
-      - '3000:3000'
-    entrypoint: ["npm", "run", "dev"]
+      - '3307:3306'
 
 volumes:
   database:
