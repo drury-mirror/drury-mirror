@@ -26,7 +26,7 @@ export async function signIn(formData: FormData) {
     const user = await db.user.findUnique({ where: { email: valid.data.email } })
 
     if (!user || !(await bcrypt.compare(valid.data.password, user.password_hash))) {
-        return { error: 'Invalid username or password' }
+        throw new Error('Invalid username or password')
     }
 
     await createToken(user.id)

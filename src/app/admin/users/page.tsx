@@ -3,9 +3,7 @@ import { userHasRole } from '@/lib/auth/token'
 import { notFound } from 'next/navigation'
 
 export default async function Page() {
-    const userIsAdmin = await userHasRole('admin')
-
-    if (!userIsAdmin) {
+    if (!(await userHasRole('admin'))) {
         return notFound()
     }
 

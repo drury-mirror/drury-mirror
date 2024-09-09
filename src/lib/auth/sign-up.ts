@@ -41,7 +41,7 @@ export async function signUp(formData: FormData) {
     }
 
     if (await db.user.findUnique({ where: { email: valid.data.email } })) {
-        return { error: 'A user with that email already exists.' }
+        throw new Error('A user with that email already exists.')
     }
 
     const passwordHash = await bcrypt.hash(valid.data.password, 11)
