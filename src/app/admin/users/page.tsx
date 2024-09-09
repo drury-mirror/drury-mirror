@@ -12,14 +12,9 @@ export default async function Page() {
     return <div className={'flex gap-4 flex-col p-4'}>
         {users.map(user => (
             <div key={user.id} className={'border rounded border-gray-700 p-4'}>
-                <div>{user.email}</div>
-                <div>{user.first_name} {user.last_name}</div>
-                {user.roles.map(role => (
-                    <div key={role.id}>
-                        <div>{role.name}</div>
-                        <div>{role.description}</div>
-                    </div>
-                ))}
+                <div>Name: {user.first_name} {user.last_name}</div>
+                <div>Email: {user.email}</div>
+                <div>Roles: {user.roles.map(role => role.name[0].toUpperCase() + role.name.substring(1)).join(', ')}</div>
             </div>
         ))}
     </div>

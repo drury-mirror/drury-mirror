@@ -18,7 +18,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href={'/'}>Drury Mirror Admin</Link>
         </div>
         <div className={'flex gap-4'}>
+            <SignedIn userHasRoles={['admin']}>
+                <div className={'flex px-3 rounded border-gray-700 border h-10 hover:bg-gray-800 items-center'}>
+                    <Link href={'/admin/users'}>Users</Link>
+                </div>
+            </SignedIn>
             <SignedIn>
+                <div className={'flex px-3 rounded border-gray-700 border h-10 hover:bg-gray-800 items-center'}>
+                    <Link href={'/profile'}>Profile</Link>
+                </div>
                 <SignOutButton/>
             </SignedIn>
             <SignedOut>
