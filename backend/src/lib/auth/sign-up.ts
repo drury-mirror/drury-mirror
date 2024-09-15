@@ -25,6 +25,10 @@ const userSchema = z.object({
     message: 'Passwords do not match', path: ['confirm_password'],
 })
 
+export async function hashPassword(password: string) {
+    return bcrypt.hash(password, 11)
+}
+
 export async function signUp(formData: FormData) {
     const data = {
         email: formData.get('email'),
@@ -44,7 +48,7 @@ export async function signUp(formData: FormData) {
         throw new Error('A user with that email already exists.')
     }
 
-    const passwordHash = await bcrypt.hash(valid.data.password, 11)
+    const passwordHash = await hashPassword(valid.data.password)
 
     const user = await db.user.create({
         data: {

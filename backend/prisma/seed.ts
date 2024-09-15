@@ -1,0 +1,79 @@
+import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
+
+const db = new PrismaClient()
+
+async function hashPassword(password: string) {
+    return bcrypt.hash(password, 11)
+}
+
+async function createRoles() {
+    await db.role.create({
+        data: {
+            name: 'admin',
+            description: 'Can delete users and manage their roles.',
+        },
+    })
+
+    await db.role.create({
+        data: {
+            name: 'publisher',
+            description: 'Can create, edit, and delete articles.',
+        },
+    })
+}
+
+async function createUsers() {
+    await db.user.create({
+        data: {
+            email: 'example@example.com',
+            first_name: 'Admin',
+            last_name: 'User',
+            password_hash: await hashPassword('DevelopmentPassword1!'),
+            roles: {
+                connect: [
+                    { name: 'admin' },
+                    { name: 'publisher' },
+                ],
+            },
+        },
+    })
+
+    await db.user.create({
+        data: {
+            email: 'example2@example.com',
+            first_name: 'Publisher',
+            last_name: 'User',
+            password_hash: await hashPassword('DevelopmentPassword1!'),
+            roles: {
+                connect: [
+                    { name: 'publisher' },
+                ],
+            },
+        },
+    })
+
+    await db.user.create({
+        data: {
+            email: 'example3@example.com',
+            first_name: 'Default',
+            last_name: 'User',
+            password_hash: await hashPassword('DevelopmentPassword1!'),
+        },
+    })
+}
+
+async function main() {
+    await createRoles()
+    await createUsers()
+}
+
+main()
+    .then(async () => {
+        await db.$disconnect()
+    })
+    .catch(async (e) => {
+        console.error(e)
+        await db.$disconnect()
+        process.exit(1)
+    })

@@ -21,11 +21,11 @@ export default function SignUp() {
         </div>
         <div>
             <label htmlFor='password'>Password</label>
-            <input className={'text-black'} id='password' name='password' type='password' defaultValue={'Letmein1!'}/>
+            <input className={'text-black'} id='password' name='password' type='password' defaultValue={'DevelopmentPassword1!'}/>
         </div>
         <div>
             <label htmlFor='confirm_password'>Confirm password</label>
-            <input className={'text-black'} id='confirm_password' name='confirm_password' type='password' defaultValue={'Letmein1!'}/>
+            <input className={'text-black'} id='confirm_password' name='confirm_password' type='password' defaultValue={'DevelopmentPassword1!'}/>
         </div>
         <button type='submit'>Sign Up</button>
     </form>

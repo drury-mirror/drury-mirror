@@ -11,7 +11,7 @@ export default function SignIn() {
         </div>
         <div>
             <label htmlFor='password'>Password</label>
-            <input className={'text-black'} id='password' name='password' type='password' defaultValue={'Letmein1!'}/>
+            <input className={'text-black'} id='password' name='password' type='password' defaultValue={'DevelopmentPassword1!'}/>
         </div>
         <button type='submit'>Sign In</button>
     </form>
