@@ -19,6 +19,8 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card'
+import Link from 'next/link'
+import { Separator } from '@/components/ui/separator'
 
 export default function SignIn() {
     const form = useForm({
@@ -36,7 +38,7 @@ export default function SignIn() {
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
-                        <form id={'form'} action={signIn}>
+                        <form id={'form'} action={signIn} className={'flex flex-col gap-4'}>
                             <FormField
                                 control={form.control}
                                 name={'email'}
@@ -67,7 +69,13 @@ export default function SignIn() {
                     </Form>
                 </CardContent>
                 <CardFooter>
-                    <Button type='submit' form={'form'}>Sign in</Button>
+                    <div className='flex flex-col gap-4 w-full'>
+                        <Button className={'w-full'} type='submit' form={'form'}>Sign in</Button>
+                        <Separator/>
+                        <div className='flex justify-center text-sm text-muted-foreground'>
+                            Don&apos;t have an account?&nbsp;<Link className={'text-primary font-bold'} href={'/auth/sign-up'}>Sign up</Link>
+                        </div>
+                    </div>
                 </CardFooter>
             </Card>
         </div>
