@@ -1,9 +1,10 @@
 'use client'
 
 import { signOut } from '@/lib/auth/sign-out'
+import { Button } from '@/components/ui/button'
 
 export default function SignOutButton() {
-    return <form className={'flex px-3 rounded border-gray-700 border h-10 hover:bg-gray-800'} action={signOut}>
-        <button type={'submit'}>Sign out</button>
+    return <form action={signOut}>
+        <Button type={'submit'} variant={'outline'}>Sign out</Button>
     </form>
 }
