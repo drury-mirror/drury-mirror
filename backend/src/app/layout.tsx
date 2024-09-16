@@ -39,12 +39,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href={'/'}>Drury Mirror Admin</Link>
             <NavigationMenu>
                 <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <Link href='/' legacyBehavior passHref>
-                            <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
-                        </Link>
-                    </NavigationMenuItem>
                     <SignedIn userHasRoles={['admin']}>
+                        <NavigationMenuItem>
+                            <Link href='/' legacyBehavior passHref>
+                                <NavigationMenuLink className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
+                            </Link>
+                        </NavigationMenuItem>
                         <NavigationMenuItem>
                             <Link href='/admin/users' legacyBehavior passHref>
                                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>Users</NavigationMenuLink>
