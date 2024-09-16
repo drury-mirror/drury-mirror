@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ModeToggle } from '@/components/ui/mode-toggle-button'
+import { Separator } from "@/components/ui/separator"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </SignedIn>
                 </NavigationMenuList>
             </NavigationMenu>
-            <div className={'flex gap-2'}>
+            <div className={'flex gap-2 h-10'}>
                 <ModeToggle/>
                 <SignedIn>
                     <DropdownMenu>
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     </DropdownMenu>
                 </SignedIn>
                 <SignedOut>
+                    <Separator orientation={'vertical'}/>
                     <Button variant={'outline'} asChild><Link href={'/auth/sign-in'}>Sign in</Link></Button>
                     <Button asChild><Link href={'/auth/sign-up'}>Sign up</Link></Button>
                 </SignedOut>
