@@ -9,7 +9,6 @@ import {
     Command,
     CommandEmpty,
     CommandGroup,
-    CommandInput,
     CommandItem,
     CommandList,
 } from '@/components/ui/command'
@@ -35,17 +34,15 @@ export function RoleSelect({ roles, currentValue }: { roles: Role[], currentValu
                     variant='outline'
                     role='combobox'
                     aria-expanded={open}
-                    className='w-[200px] justify-between'
                 >
                     <span className={'capitalize'}>{roles.find((role) => role.value === value)?.value}</span>
                     <ChevronDown className='ml-2 h-4 w-4 shrink-0 opacity-50'/>
                 </Button>
             </PopoverTrigger>
-            <PopoverContent align={'end'} className='p-0'>
+            <PopoverContent align={'end'} className='p-0 w-max'>
                 <Command>
-                    <CommandInput placeholder='Search framework...'/>
                     <CommandList>
-                        <CommandEmpty>No framework found.</CommandEmpty>
+                        <CommandEmpty>No roles found.</CommandEmpty>
                         <CommandGroup>
                             {roles.map((role) => (
                                 <CommandItem
@@ -62,7 +59,7 @@ export function RoleSelect({ roles, currentValue }: { roles: Role[], currentValu
                                             value === role.value ? 'opacity-100' : 'opacity-0',
                                         )}
                                     />
-                                    <div className='flex gap-0 flex-col'>
+                                    <div className='flex gap-0 flex-col mr-2 my-1'>
                                         <span className={'capitalize'}>{role.value}</span>
                                         <span className={'text-muted-foreground'}>{role.description}</span>
                                     </div>

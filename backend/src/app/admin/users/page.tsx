@@ -1,24 +1,17 @@
 import db from '@/lib/db'
 import { userHasRole } from '@/lib/auth/token'
 import { notFound } from 'next/navigation'
-import { Ellipsis, Pencil, Trash } from 'lucide-react'
+import { Ellipsis } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
+    DropdownMenuItem, DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import React from 'react'
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select'
-import { RoleSelect, Role } from '@/app/admin/users/combobox'
+import { RoleSelect, Role } from '@/app/admin/users/role-select'
 
 export default async function Page() {
     if (!(await userHasRole('admin'))) {
@@ -41,52 +34,23 @@ export default async function Page() {
                     <div className=''>{user.email}</div>
                 </div>
                 <div className={'flex gap-4 items-center'}>
-                    {/*<Select defaultValue={user.roles.length > 0 ? user.roles[0].id : 'none'}>*/}
-                    {/*    <SelectTrigger className='w-[180px]'>*/}
-                    {/*        <SelectValue placeholder='Role'/>*/}
-                    {/*    </SelectTrigger>*/}
-                    {/*    <SelectContent>*/}
-                    {/*        <SelectItem value={'none'} >*/}
-                    {/*            <div className='flex gap-0 flex-col'>*/}
-                    {/*                <span className={'capitalize'}>None</span>*/}
-                    {/*                <span className={'text-muted-foreground'}>Has no permissions.</span>*/}
-                    {/*            </div>*/}
-                    {/*        </SelectItem>*/}
-                    {/*        {roles.map(role => (*/}
-                    {/*            <SelectItem key={role.id} value={role.id}>*/}
-                    {/*                <div className='flex gap-0 flex-col'>*/}
-                    {/*                    <span className={'capitalize'}>{role.name}</span>*/}
-                    {/*                    <span className={'text-muted-foreground'}>{role.description}</span>*/}
-                    {/*                </div>*/}
-                    {/*            </SelectItem>*/}
-                    {/*        ))}*/}
-                    {/*    </SelectContent>*/}
-                    {/*</Select>*/}
-                    <RoleSelect roles={[emptyRole].concat(roles.map(role => ({ value: role.name, description: role.description})))} currentValue={user.roles.length > 0 ? user.roles[0].name : emptyRole.value}/>
-                    {/*<Button variant={'outline'} size={'icon'}>*/}
-                    {/*    <Pencil className='h-[1.2rem] w-[1.2rem]'/>*/}
-                    {/*</Button>*/}
-                    {/*<Button variant={'outline'} size={'icon'}>*/}
-                    {/*    <Trash className='h-[1.2rem] w-[1.2rem] text-destructive'/>*/}
-                    {/*</Button>*/}
+                    <RoleSelect roles={roles.map(role => ({ value: role.name, description: role.description})).concat([emptyRole])} currentValue={user.roles.length > 0 ? user.roles[0].name : emptyRole.value}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant={'ghost'} size={'icon'}>
+                            <Button variant={'outline'} size={'icon'}>
                                 <Ellipsis className='h-[1.2rem] w-[1.2rem]'/>
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align={'end'}>
                             <DropdownMenuItem asChild>
-                                <Link href={'#'}>Manage</Link>
+                                <Link href={'#'}>Edit</Link>
                             </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                                <Link href={'#'}>Change role...</Link>
-                            </DropdownMenuItem>
+                            <DropdownMenuSeparator/>
                             <DropdownMenuItem asChild>
                                 <Link href={'#'}>Disable...</Link>
                             </DropdownMenuItem>
                             <DropdownMenuItem asChild>
-                                <Link href={'#'}>Remove...</Link>
+                                <Link href={'#'}>Delete...</Link>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
