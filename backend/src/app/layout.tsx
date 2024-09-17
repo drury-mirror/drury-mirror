@@ -21,8 +21,27 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ThemeProvider } from '@/components/theme-provider'
 import { ModeToggle } from '@/components/ui/mode-toggle-button'
+import Image from 'next/image'
 
 const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+    title: 'Drury Mirror',
+    icons: {
+        icon: [
+            {
+                media: '(prefers-color-scheme: light)',
+                url: '/images/favicon/favicon-light.png',
+                href: '/images/favicon/favicon-light.png',
+            },
+            {
+                media: '(prefers-color-scheme: dark)',
+                url: '/images/favicon/favicon-dark.png',
+                href: '/images/favicon/favicon-dark.png',
+            },
+        ],
+    },
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return <html lang='en'>
@@ -31,9 +50,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SignedIn>
             <header className={'border-b'}>
                 <div className={'h-16 flex items-center justify-between mx-auto max-w-[1280px] px-4'}>
-                    <div className='flex gap-4 items-center'>
-                        <Link className={'text-lg text-primary font-bold hover:scale-105'} href={'/'}>Drury
-                            Mirror</Link>
+                    <div className='flex gap-2 items-center'>
+                        <Link className={'hover:scale-105'} href={'/'}>
+                            <Image src={'/images/logo/logo.png'} alt={'Drury Mirror'} width={32} height={32}/>
+                        </Link>
                         <NavigationMenu>
                             <NavigationMenuList>
                                 <SignedIn userHasRoles={['admin']}>
