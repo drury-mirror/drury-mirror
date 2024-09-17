@@ -34,7 +34,7 @@ export default async function Page() {
                                 <Ellipsis className='h-[1.2rem] w-[1.2rem]'/>
                             </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent>
+                        <DropdownMenuContent align={'end'}>
                             <DropdownMenuItem asChild>
                                 <Link href={'#'}>Manage</Link>
                             </DropdownMenuItem>
