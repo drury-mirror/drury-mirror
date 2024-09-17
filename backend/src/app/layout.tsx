@@ -80,7 +80,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                                 <Button variant={'outline'} size={'icon'}><User
                                     className='h-[1.2rem] w-[1.2rem]'/></Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent>
+                            <DropdownMenuContent align={'end'}>
                                 <DropdownMenuItem asChild>
                                     <Link href={'/profile'}><Settings className='mr-2 h-4 w-4'/>Settings</Link>
                                 </DropdownMenuItem>
