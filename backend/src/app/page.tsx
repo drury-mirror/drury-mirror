@@ -20,6 +20,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import Image from 'next/image'
 
 export default async function Home() {
     await verifyToken()
@@ -56,7 +57,8 @@ export default async function Home() {
         </div>
         <div className='flex flex-col gap-4 p-4 pt-0'>
             {articles.map(article => (
-                <div key={article.id} className={'flex rounded-lg border justify-between p-4'}>
+                <div key={article.id} className={'flex rounded-lg border justify-between p-4 gap-4'}>
+                    <Image className={'rounded'} alt={''} src={`https://picsum.photos/seed/${article.id}/128/128`} width={128} height={128}/>
                     <Link href={`/articles/${article.id}`} className='flex flex-col gap-1 flex-grow'>
                         <span>{article.title}</span>
                         <span className={'text-muted-foreground'}>{article.created_at.toDateString()}</span>
