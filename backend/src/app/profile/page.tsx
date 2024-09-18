@@ -18,7 +18,7 @@ export default async function Page() {
         <div className={'border rounded border-gray-700 p-4'}>
             <div>Name: {user.first_name} {user.last_name}</div>
             <div>Email: {user.email}</div>
-            <div>Roles: {user.roles.map(role => role.name[0].toUpperCase() + role.name.substring(1)).join(', ')}</div>
+            <div>Role: {user.role.name}</div>
         </div>
     </div>
 }

@@ -56,13 +56,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                         </Link>
                         <NavigationMenu>
                             <NavigationMenuList>
-                                <SignedIn userHasRoles={['admin']}>
+                                <SignedIn validRoles={['admin', 'publisher']}>
                                     <NavigationMenuItem>
                                         <Link href='/' legacyBehavior passHref>
                                             <NavigationMenuLink
                                                 className={navigationMenuTriggerStyle()}>Home</NavigationMenuLink>
                                         </Link>
                                     </NavigationMenuItem>
+                                </SignedIn>
+                                <SignedIn validRoles={['admin']}>
                                     <NavigationMenuItem>
                                         <Link href='/admin/users' legacyBehavior passHref>
                                             <NavigationMenuLink

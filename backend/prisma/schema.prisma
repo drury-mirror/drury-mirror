@@ -15,7 +15,8 @@ model User {
   password_hash String
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
-  roles         Role[]
+  role          Role      @relation(fields: [role_id], references: [id])
+  role_id       String
   articles      Article[]
 }
 
@@ -23,7 +24,7 @@ model Role {
   id          String  @id @default(cuid())
   name        String  @unique
   description String?
-  users       User[]
+  User        User[]
 }
 
 model Article {

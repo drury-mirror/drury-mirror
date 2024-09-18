@@ -70,7 +70,7 @@ export async function verifyToken() {
 }
 
 export async function getUser(user_id: string) {
-    return db.user.findUnique({ where: { id: user_id }, include: { roles: true } })
+    return db.user.findUnique({ where: { id: user_id }, include: { role: true } })
 }
 
 export async function userHasRole(role: string) {
@@ -86,13 +86,7 @@ export async function userHasRole(role: string) {
         return false
     }
 
-    for (const user_role of user.roles) {
-        if (user_role.name === role) {
-            return true
-        }
-    }
-
-    return false
+    return user.role.name === role
 }
 
 export async function isLoggedIn() {

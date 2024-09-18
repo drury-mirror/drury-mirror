@@ -21,6 +21,13 @@ async function createRoles() {
             description: 'Can create, edit, and delete articles.',
         },
     })
+
+    await db.role.create({
+        data: {
+            name: 'none',
+            description: 'Has no permissions.',
+        },
+    })
 }
 
 async function createUsers() {
@@ -30,12 +37,7 @@ async function createUsers() {
             first_name: 'Admin',
             last_name: 'User',
             password_hash: await hashPassword('DevelopmentPassword1!'),
-            roles: {
-                connect: [
-                    { name: 'admin' },
-                    { name: 'publisher' },
-                ],
-            },
+            role: { connect: { name: 'admin' } },
         },
     })
 
@@ -45,11 +47,7 @@ async function createUsers() {
             first_name: 'Publisher',
             last_name: 'User',
             password_hash: await hashPassword('DevelopmentPassword1!'),
-            roles: {
-                connect: [
-                    { name: 'publisher' },
-                ],
-            },
+            role: { connect: { name: 'publisher' } },
         },
     })
 
@@ -59,6 +57,7 @@ async function createUsers() {
             first_name: 'Default',
             last_name: 'User',
             password_hash: await hashPassword('DevelopmentPassword1!'),
+            role: { connect: { name: 'none' } },
         },
     })
 }

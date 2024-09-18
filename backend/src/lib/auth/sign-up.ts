@@ -56,6 +56,7 @@ export async function signUp(formData: FormData) {
             first_name: valid.data.first_name,
             last_name: valid.data.last_name,
             password_hash: passwordHash,
+            role: { connect: { name: 'none' } },
         },
     })
 

@@ -1,24 +1,19 @@
 import React from 'react'
 import { isLoggedIn, userHasRole } from '@/lib/auth/token'
 
-export default async function SignedIn({ children, userHasRoles }: { children: React.ReactNode, userHasRoles?: string[] }) {
-    if (!userHasRoles) {
-        userHasRoles = []
-    }
-
+export default async function SignedIn({ children, validRoles }: { children: React.ReactNode, validRoles?: string[] }) {
     if (await isLoggedIn()) {
-        let userHasAllRoles = true
-
-        for (const role of userHasRoles) {
-            if (!(await userHasRole(role))) {
-                userHasAllRoles = false
-            }
+        if (!validRoles) {
+            return <>{children}</>
         }
 
-        if (userHasAllRoles) {
-            return <>{children}</>
+        for (const role of validRoles) {
+            if (await userHasRole(role)) {
+                return <>{children}</>
+            }
         }
     }
 
     return <></>
+    // return (await isLoggedIn() && (!requiredRole || await userHasRole(requiredRole))) ? <>{children}</> : <></>
 }

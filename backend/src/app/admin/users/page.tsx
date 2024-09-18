@@ -11,20 +11,15 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import React from 'react'
-import { RoleSelect, Role } from '@/app/admin/users/role-select'
+import { RoleSelect } from '@/app/admin/users/role-select'
 
 export default async function Page() {
     if (!(await userHasRole('admin'))) {
         return notFound()
     }
 
-    const users = await db.user.findMany({ include: { roles: true } })
+    const users = await db.user.findMany({ include: { role: true } })
     const roles = await db.role.findMany()
-
-    const emptyRole: Role = {
-        value: 'none',
-        description: 'Has no permissions.'
-    }
 
     return <div className={'flex gap-4 flex-col p-4 max-w-[1024px] mx-auto'}>
         {users.map(user => (
@@ -34,7 +29,7 @@ export default async function Page() {
                     <div className=''>{user.email}</div>
                 </div>
                 <div className={'flex gap-4 items-center'}>
-                    <RoleSelect roles={roles.map(role => ({ value: role.name, description: role.description})).concat([emptyRole])} currentValue={user.roles.length > 0 ? user.roles[0].name : emptyRole.value}/>
+                    <RoleSelect roles={roles.map(role => ({ value: role.name, description: role.description}))} currentValue={user.role.name}/>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant={'outline'} size={'icon'}>
