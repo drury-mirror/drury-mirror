@@ -25,8 +25,8 @@ export default async function Page() {
         {users.map(user => (
             <div key={user.id} className='flex rounded-lg border p-4 items-center justify-between'>
                 <div className='flex flex-col gap-2'>
-                    <Link href={'#'} className={'font-bold'}>{user.first_name} {user.last_name}</Link>
-                    <div className=''>{user.email}</div>
+                    <Link href={'#'} className={''}>{user.first_name} {user.last_name}</Link>
+                    <div className={'text-muted-foreground'}>{user.email}</div>
                 </div>
                 <div className={'flex gap-4 items-center'}>
                     <RoleSelect roles={roles.map(role => ({ value: role.name, description: role.description}))} currentValue={user.role.name}/>

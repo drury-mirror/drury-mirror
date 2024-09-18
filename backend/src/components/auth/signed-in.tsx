@@ -15,5 +15,4 @@ export default async function SignedIn({ children, validRoles }: { children: Rea
     }
 
     return <></>
-    // return (await isLoggedIn() && (!requiredRole || await userHasRole(requiredRole))) ? <>{children}</> : <></>
 }

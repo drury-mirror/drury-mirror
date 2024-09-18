@@ -49,10 +49,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
         <SignedIn>
             <header className={'border-b'}>
-                <div className={'h-16 flex items-center justify-between mx-auto max-w-[1280px] px-4'}>
+                <div className={'h-16 flex items-center justify-between mx-auto max-w-[1024px] px-4'}>
                     <div className='flex gap-2 items-center'>
-                        <Link className={'hover:scale-105'} href={'/'}>
-                            <Image src={'/images/logo/logo.png'} alt={'Drury Mirror'} width={32} height={32}/>
+                        <Link className={'hover:scale-105 flex'} href={'/'}>
+                            <Image className={'scale-100 dark:scale-0'} src={'/images/logo/logo_light.png'} alt={'Drury Mirror'} width={32} height={32}/>
+                            <Image className={'absolute scale-0 dark:scale-100'} src={'/images/logo/logo_dark.png'} alt={'Drury Mirror'} width={32} height={32}/>
                         </Link>
                         <NavigationMenu>
                             <NavigationMenuList>
@@ -96,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
             </header>
         </SignedIn>
-        <main className={'mx-auto max-w-[1280px]'}>{children}</main>
+        <main className={'mx-auto max-w-[1024px]'}>{children}</main>
     </ThemeProvider>
     </body>
     </html>
