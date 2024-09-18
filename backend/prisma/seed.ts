@@ -62,9 +62,33 @@ async function createUsers() {
     })
 }
 
+async function createArticles() {
+    await db.article.create({
+        data: {
+            title: 'Article 1',
+            author: { connect: { email: 'example@example.com' } },
+        },
+    })
+
+    await db.article.create({
+        data: {
+            title: 'Article 2',
+            author: { connect: { email: 'example2@example.com' } },
+        },
+    })
+
+    await db.article.create({
+        data: {
+            title: 'Article 3',
+            author: { connect: { email: 'example3@example.com' } },
+        },
+    })
+}
+
 async function main() {
     await createRoles()
     await createUsers()
+    await createArticles()
 }
 
 main()
